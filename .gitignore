@@ -1,2 +1,8 @@
 .idea
-**/.prg
+*.dbg
+*.prg
+*.sym
+*.vs
+ByteDump.txt
+.source.txt
+.vscode

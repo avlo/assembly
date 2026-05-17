@@ -3,6 +3,7 @@
 *.prg
 *.sym
 *.vs
+*.d64
 ByteDump.txt
 .source.txt
 .vscode

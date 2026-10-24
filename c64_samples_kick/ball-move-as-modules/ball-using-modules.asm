@@ -1,4 +1,7 @@
-#import "../setup.asm"
+  // assembler constants for special addresses
+  .const CLEAR_SCREEN_KERNAL_ADDR = $E544  // addr Kernal clear screen
+
+#import "../basic-start.asm"
 //
 // howto: loading prg
 // more new
@@ -15,6 +18,11 @@
 //      LOAD "ballmove-setup",8,1
 //      run
 //
+*=$1000 "Main Start"
+Main:
+  // call kernal clear screen routine leave cursor upper left
+  jsr CLEAR_SCREEN_KERNAL_ADDR
+  
 // setup --------------------------------
 //
     lda #$93   // Load A with PETSCII $93 (clear screen)

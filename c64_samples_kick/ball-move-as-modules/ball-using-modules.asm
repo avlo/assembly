@@ -17,10 +17,10 @@
 //
 // setup --------------------------------
 //
-    lda #$93
-    jsr $ffd2 // print char
-    ldx #$0c
-    ldy #$1
+    lda #$93   // Load A with PETSCII $93 (clear screen)
+    jsr $ffd2  // Call KERNAL CHROUT: clear screen and move cursor home
+    ldx #$0c   // Set X to 12 (intended cursor row)
+    ldy #$01   // Set Y to 1 (intended cursor column)
 //
 // print ball at current pos ------------
 //

@@ -1,7 +1,7 @@
 #importonce
 
-.const SCREEN_START = $0400  // The start of c64 screen memory
-.const SCREEN_DIRECT_START = SCREEN_START + $0000 // offset in screen memory to write
+  .const SCREEN_START = $0400  // The start of c64 screen memory
+  .const SCREEN_DIRECT_START = SCREEN_START + $0000 // offset in screen memory to write
 
 str_to_poke: .text  @"loaded start-module\$00"  // null terminated string to print
 

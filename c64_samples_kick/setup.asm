@@ -1,7 +1,7 @@
 #importonce
 
-// assembler constants for special addresses
-.const CLEAR_SCREEN_KERNAL_ADDR = $E544  // addr Kernal clear screen
+  // assembler constants for special addresses
+  .const CLEAR_SCREEN_KERNAL_ADDR = $E544  // addr Kernal clear screen
 
 setup:
 // 10 SYS (4096)

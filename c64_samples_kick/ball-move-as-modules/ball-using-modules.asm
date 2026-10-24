@@ -5,7 +5,7 @@
 // another
 //
 // variant 1) from bash cli:
-//      x64 -autoload ballmove-setup.prg
+//      x64 -autoload ball.prg
 //    from c64:
 //      run
 //
@@ -25,16 +25,7 @@
 // print ball at current pos ------------
 //
     
-start:
-    clc
-    jsr $fff0 // set cursor
-    lda #$71
-    jsr $ffd2 // print char
-//
-// keyboard input
-//
-    stx $033c
-    sty $033d
+#import "start-module.asm"
     
 loop1:
     jsr $ffe4 // getin

@@ -1,0 +1,51 @@
+Building Games for Old Retro 1985 Hardware in C / zippy race
+https://www.youtube.com/watch?v=n5fBdYuIKqg&t=496s
+
+2:05 robsmithdev builds games using amos (amiga basic variant)
+how bunny's boing ball bountry the new amiga speed-run challenge game was made
+
+2:17 gyruss amiga port by jotd
+
+2:30
+batman rises amiga ocs demo
+
+amiga hardware programming in C (part 1)
+https://github.com/weiju/amiga_hardware_in_c
+
+7:49
+https://github.com/bartmanabyss/vscode-amiga-debug
+
+9:05 
+sprite rendering / motorcycle
+	blitter (1of2 coprocessors, 2x speed of 68000), rectangular so backgrounds attn
+
+12:03 sprites
+14:40 imported mame screenshots into asprite on windows 
+15:09 bare-metal amiga programming / how to render sprites on screen
+
+16:08 background vert scroll
+16:35 xenon 2 shitty background scroll due to many blits
+
+17:48 fast vertical scroll method
+
+22:02 tile map / screen copying
+21:14 tile map creation, powercrawler
+
+~~~~
+~~~~
+
+c64 IP 10.42.0.160
+
+~~~~
+D64- image diskette container / virtual disk file.  can contain .prg (or other) file types for programs are not just single PRG
+PRG- single file. not disk nor tape & not container nor multiple files
+
+create .d64 file:
+	x64 -autoload ball.prg -autostartprgdiskimage "ball.d64"
+
+~~~~
+usb keyboard equivalent key mappings
+
+F10 - menu
+esc - ready prompt
+

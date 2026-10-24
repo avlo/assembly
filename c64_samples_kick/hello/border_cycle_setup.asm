@@ -3,7 +3,7 @@
 // offset in screen memory to write
   .const SCREEN_DIRECT_START = SCREEN_START + $0000 
 // program variables
-str_to_poke: .text  @"hello world assembly 3\$00"  // null terminated string to print
+str_to_poke: .text  @"hello world assembly border-cycle-setup\$00"  // null terminated string to print
 
 #import "../setup.asm"
  

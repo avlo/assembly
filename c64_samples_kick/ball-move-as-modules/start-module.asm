@@ -2,9 +2,9 @@
 
   .const SCREEN_START = $0400  // The start of c64 screen memory
   .const SCREEN_DIRECT_START = SCREEN_START + $0000 // offset in screen memory to write
-  .const PLOT_KERNAL_CURSOR = $fff0
-  .const CURSOR_CHAR = $D1
-  .const CHR_OUT = $ffd2
+  .const KERNAL_SET_CURSOR = $fff0
+  .const KERNAL_CHR_OUT = $ffd2
+  .const CURSOR_CHAR = $D1 // circle cursor
 
 str_to_poke: .text  @"loaded start-module\$00"  // null terminated string to print
 
@@ -20,9 +20,9 @@ write_loop:
 
 start:
   clc // clear-carry status == CLEARED (see: README.md)
-  jsr PLOT_KERNAL_CURSOR // if clc, set cursor (see: README.md)
+  jsr KERNAL_SET_CURSOR // if clc, set cursor (see: README.md)
   lda #CURSOR_CHAR
-  jsr CHR_OUT // print char
+  jsr KERNAL_CHR_OUT // print char
 //
 // keyboard input
 //

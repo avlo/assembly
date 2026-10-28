@@ -1,5 +1,7 @@
   // assembler constants for special addresses
   .const CLEAR_SCREEN_KERNAL_ADDR = $E544  // addr Kernal clear screen
+  .const ROW_POS = $0c
+  .const COL_POS = $01
 
 #import "../basic-start.asm"
 //
@@ -27,8 +29,8 @@ Main:
 //
     lda #$93   // Load A with PETSCII $93 (clear screen)
     jsr $ffd2  // Call KERNAL CHROUT: clear screen and move cursor home
-    ldx #$0c   // Set X to 12 (intended cursor row)
-    ldy #$01   // Set Y to 1 (intended cursor column)
+    ldx #ROW_POS   // Set X to 12 (intended cursor row)
+    ldy #COL_POS   // Set Y to 1 (intended cursor column)
 //
 // print ball at current pos ------------
 //

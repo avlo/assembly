@@ -4,12 +4,14 @@
   .const KERNAL_SET_CURSOR = $fff0
   .const KERNAL_CHR_OUT = $ffd2
   
-  .const COL_POS = $000A // decimal 10, "(" ----> asl (shift left) decimal 80, $50, "P"
-  .const ROW_POS = $000A // decimal 25
-  .const CURSOR_CHAR = $D1 // circle cursor
+  .const TEN_HEX = $0A // decimal 10, "(" ----> asl (shift left) decimal 80, $50, "P"
+  .const CURSOR_BALL = $D1 // circle cursor
+  .const CURSOR_UNDR = $C1 // underscore cursor
   
-  .const RAM_START_ADDRESS = $0000
-  .const RAM_START_ADDRESS_NEXT = $0002
+  .const MEMORY_POS_X = $0000
+  .const MEMORY_POS_Y = $0002
+  .const LAST_ROW_POS = $0004
+  .const LAST_COL_POS = $0006
 
 #import "../basic-start.asm"
 
@@ -17,38 +19,53 @@
 Main:
   jsr CLEAR_SCREEN_KERNAL_ADDR
 
-  clc
-  lda #ROW_POS
+// first round
+  lda #TEN_HEX
+  asl // shift left: 000A mult by 2 should put at row 20
+  sta LAST_ROW_POS // store shifted pos to sta ROW_POS
   jsr setpositionx
-    
-  clc
-  lda #COL_POS
+  
+  lda #TEN_HEX
   lsr  // shift right-> 000A div by 2 should put at column 5
-  sta RAM_START_ADDRESS
-  ldy RAM_START_ADDRESS // load value at RAM
-//  note: ldy #RAM_START_ADDRESS would load *VALUE* $0000 into Y
+  sta LAST_COL_POS // store shifted pos to sta COL_POS
+  jsr setpositiony
+//  note: ldy #MEMORY_POS_Y would load *VALUE* $0000 into Y
+  jsr printchar_BALL
+  
+//// second round  
+  lda #LAST_ROW_POS
+  adc 1
+  jsr setpositionx
 
-  jsr printchar
+  lda #LAST_COL_POS
+  adc 1
+  jsr setpositiony
+
+  jsr printchar_UNDR
   rts  
   
-printchar:  
+printchar_UNDR:  
   clc
   jsr KERNAL_SET_CURSOR // if clc, set cursor (see: README.md)
-  lda #CURSOR_CHAR
+  lda #CURSOR_UNDR
   jsr KERNAL_CHR_OUT
   rts
   
-setpositionx:  
-  asl // shift left: 000A mult by 2 should put at row 20  
-  sta RAM_START_ADDRESS_NEXT
-  ldx RAM_START_ADDRESS_NEXT
+printchar_BALL:
+  clc
+  jsr KERNAL_SET_CURSOR // if clc, set cursor (see: README.md)
+  lda #CURSOR_BALL
+  jsr KERNAL_CHR_OUT
   rts  
   
-//  sta RAM_START_ADDRESS
-//  ldy #RAM_START_ADDRESS   // Set Y to 1 (intended cursor column)
-//  
-//  lda ROW_POS
-////  asl 
-//  sta RAM_START_ADDRESS_NEXT
-//  ldx #RAM_START_ADDRESS_NEXT   // Set X to 12 (intended cursor row)
+setpositionx:
+  clc  
+  sta MEMORY_POS_X
+  ldx MEMORY_POS_X
+  rts
+  
+setpositiony:
+  clc  
+  sta MEMORY_POS_Y
+  ldy MEMORY_POS_Y
   rts

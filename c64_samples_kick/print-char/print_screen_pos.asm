@@ -5,13 +5,13 @@
   .label PETSCII_BALL = $D1 // circle character
   .label PETSCII_SPADE = $C1 // spade character
   
-  .label ZERO = $00
   .label TEN_HEX = $0A // decimal 10, "(" ----> asl (shift left) decimal 80, $50, "P"
-  .label ROW_POS = $0801
-  .label COL_POS = $0802
-  .label MEMORY_POS_X = $0803
-  .label MEMORY_POS_Y = $0804
-//  .label MEMORY_PETSCII_CHAR = $0805 
+
+  ROW_POS: .byte 0 // .label ROW_POS = $0801
+  COL_POS: .byte 0 // .label COL_POS = $0802
+  MEMORY_POS_X: .byte 0 // .label MEMORY_POS_X = $0803
+  MEMORY_POS_Y: .byte 0 // .label MEMORY_POS_Y = $0804
+  PETSCII_CHAR: .byte 0 // .label MEMORY_PETSCII_CHAR = $0805
 
 #import "../basic-start.asm"
 
@@ -32,7 +32,7 @@ Main:
   
 //  note: ldy #MEMORY_POS_Y would load *VALUE* $0000 into Y
   lda #PETSCII_BALL
-  sta MEMORY_PETSCII_CHAR
+  sta PETSCII_CHAR
   jsr printchar
   
 // second round
@@ -45,7 +45,7 @@ Main:
   jsr setpositiony
 
   lda #PETSCII_SPADE
-  sta MEMORY_PETSCII_CHAR
+  sta PETSCII_CHAR
   jsr printchar
   rts  
   
@@ -64,8 +64,6 @@ setpositiony:
 printchar:
   clc
   jsr KERNAL_SET_CURSOR // if clc, set cursor (see: README.md)
-  lda MEMORY_PETSCII_CHAR
+  lda PETSCII_CHAR
   jsr KERNAL_CHR_OUT
   rts
-
-MEMORY_PETSCII_CHAR: .byte 0

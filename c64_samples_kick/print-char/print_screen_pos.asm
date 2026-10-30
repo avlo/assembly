@@ -5,7 +5,7 @@
   .label PETSCII_BALL = $D1 // circle character
   .label PETSCII_SPADE = $C1 // spade character
   
-  .label TEN_HEX = $0A // decimal 10, "(" ----> asl (shift left) decimal 80, $50, "P"
+  .label HEX_TEN = $0A // decimal 10, "(" ----> asl (shift left) decimal 80, $50, "P"
 
   ROW_POS: .byte 0 // .label ROW_POS = $0801
   COL_POS: .byte 0 // .label COL_POS = $0802
@@ -20,12 +20,12 @@ Main:
   jsr KERNAL_CLRSCR
   
 // first round
-  lda #TEN_HEX // # is "immediate" mode, aka- load actual number $0A into accum
+  lda #HEX_TEN // # is "immediate" mode, aka- load actual number $0A into accum
   asl // shift left: 000A mult by 2 should put at row 20
   sta ROW_POS // store shifted pos to sta ROW_POS
   jsr setpositionx
   
-  lda #TEN_HEX
+  lda #HEX_TEN
   lsr  // shift right-> 000A div by 2 should put at column 5
   sta COL_POS // store shifted pos to sta COL_POS
   jsr setpositiony

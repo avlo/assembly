@@ -11,7 +11,7 @@
   .label COL_POS = $0802
   .label MEMORY_POS_X = $0803
   .label MEMORY_POS_Y = $0804
-  .label MEMORY_PETSCII_CHAR = $0805 
+//  .label MEMORY_PETSCII_CHAR = $0805 
 
 #import "../basic-start.asm"
 
@@ -36,7 +36,7 @@ Main:
   jsr printchar
   
 // second round
-  inc ROW_POS 
+  inc ROW_POS
   lda ROW_POS // without "#" should be absolute mode, aka- load value at memory address ROW_POS into accum
   jsr setpositionx
 
@@ -67,3 +67,5 @@ printchar:
   lda MEMORY_PETSCII_CHAR
   jsr KERNAL_CHR_OUT
   rts
+
+MEMORY_PETSCII_CHAR: .byte 0

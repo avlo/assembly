@@ -1,17 +1,8 @@
-// assembler constants for special addresses
-  .label KERNAL_CLRSCR = $E544  // addr Kernal clear screen
-  .label KERNAL_SET_CURSOR = $fff0
-  .label KERNAL_CHR_OUT = $ffd2
-  .label PETSCII_BALL = $D1 // circle character
-  .label PETSCII_SPADE = $C1 // spade character
-  
-  .label HEX_TEN = $0A // decimal 10, "(" ----> asl (shift left) decimal 80, $50, "P"
-
-  ROW_POS: .byte 0 // .label ROW_POS = $0801
-  COL_POS: .byte 0 // .label COL_POS = $0802
-  MEMORY_POS_X: .byte 0 // .label MEMORY_POS_X = $0803
-  MEMORY_POS_Y: .byte 0 // .label MEMORY_POS_Y = $0804
-  PETSCII_CHAR: .byte 0 // .label MEMORY_PETSCII_CHAR = $0805
+  ROW_POS: .byte 0 // memory position $2000       // .label ROW_POS = $0801 
+  COL_POS: .byte 0 // memory position $2001       // .label COL_POS = $0802
+  MEMORY_POS_X: .byte 0 // memory position $2002  // .label MEMORY_POS_X = $0803
+  MEMORY_POS_Y: .byte 0 // memory position $2003  // .label MEMORY_POS_Y = $0804
+  PETSCII_CHAR: .byte 0 // memory position $2004  // .label MEMORY_PETSCII_CHAR = $0805
 
 #import "../basic-start.asm"
 
@@ -67,3 +58,12 @@ printchar:
   lda PETSCII_CHAR
   jsr KERNAL_CHR_OUT
   rts
+
+// assembler constants for special addresses
+.label KERNAL_CLRSCR = $E544  // addr Kernal clear screen
+.label KERNAL_SET_CURSOR = $fff0
+.label KERNAL_CHR_OUT = $ffd2
+.label PETSCII_BALL = $D1 // circle character
+.label PETSCII_SPADE = $C1 // spade character
+
+.label HEX_TEN = $0A // decimal 10, "(" ----> asl (shift left) decimal 80, $50, "P"

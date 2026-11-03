@@ -3,10 +3,9 @@
 *=$1000 "Main Start"
 
 main: 
-// load zero page 00 (at $02) 40 (at $03), aka 0400 
-  lda #$04
+  lda #$04 // load 04 into zero page ($03)
   sta $03
-  lda #$00
+  lda #$00 // load 00 into zero page ($02)
   sta $02
   
   jsr KERNAL_CLR_SCR
@@ -28,5 +27,3 @@ loop:
 .label KERNAL_CLR_SCR = $E544  // addr Kernal clear screen
 .label SCREEN_RAM_START = $0400 // 1024 decimal
 .label SCREEN_RAM_END = $07E7 // 2047 decimal
-.label KERNAL_SET_CURSOR = $fff0
-.label KERNAL_CHR_OUT = $ffd2

@@ -1,0 +1,23 @@
+c64 asm notes:
+
+use stack to push/pop x/y/a registers
+	256/ff bytes avail stack
+	
+	// initialize stack
+	ldx #$ff 
+	txs 
+
+z flag
+	The Z (zero) flag is probably misnamed, and should have been called the E flag (for "equals"). After any comparison (CPX to compare X, CPY to compare Y, or CMP to compare A), the Z flag will be set to "on" if the compared values are equal; otherwise will be reset to "off."
+
+c flag
+	The C (carry) flag is probably misnamed, too. It should have been called the GE (greater/equal) flag, since after a comparison (CPX, CPY, or CMP), the C flag is set "on" if the register (X, Y, or A) is greater than or equal to the value compared If the register concerned is smaller, the C flag will be reset "off."	
+
+
+Flag   Brief        			Activity    Branch Taken If:
+Name   Meaning      			Level       Set     Not-Set
+------------------------------------------------------------
+Z      Zero, equal  			Busy        BEQ     BNE   
+C      Carry, greater/equal     Quiet		BCS     BCC
+N      Negative, high-bit       Busy        BMI     BPL
+V      Signed arith overflo     Quiet       BVS     BVC

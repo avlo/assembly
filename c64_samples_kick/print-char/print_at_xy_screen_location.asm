@@ -1,63 +1,64 @@
 #import "../basic-start.asm"
+#import "module-wait.asm"
 
-.label START_X = $00
-.label START_Y = $00
-.label NUM_COLS_X = $28 // 40 decimal
-.label NUM_ROWS_Y = $19 // 25 decimal
-.label remaining_x = $033e
-.label remaining_y = $033f
-accumulator_position: .byte $00
-.label stored_position_x = $033c
-.label stored_position_y = $033d
+.label NUM_COLS_X = $27
+.label NUM_ROWS_Y = $17
+.label cursor_ptr = $1040
 
 *=$1000 "Main Start" 
 main:
-  ldx #NUM_COLS_X
-  stx remaining_x
-  ldy #NUM_ROWS_Y
-  sty remaining_y
+  jsr reset_cursor
   
-//  lda #$93   // Load A with PETSCII $93 (clear screen)
-//  jsr KERNAL_CHR_OUT  // Call KERNAL CHROUT: clear
   jsr KERNAL_CLR_SCR
+  clc
+  ldx #$00
+  ldy #$00
   
-  ldx #START_X
-  stx stored_position_x
-  ldy #START_Y
-  sty stored_position_y
-  jmp loop
+  jsr loop
   rts
 
 loop:
-  clc // if clc here...
-  jsr KERNAL_SET_CURSOR // ...set cursor (see: README.md)
-  lda #CURSOR_CHAR
-  jsr KERNAL_CHR_OUT // print char
+  jsr print_char
+//  jsr clear_position
 
-//  jmp clear_position
-
-  inc stored_position_x
-  dec remaining_x
   iny
+  tya
+  cmp #NUM_COLS_X
   bne loop
-  inc stored_position_x
-  inx 
+  
+  clc
+  ldy #$00
+  inx
+  txa
+  cmp #NUM_ROWS_Y
   bne loop
   rts  
 
-clear_position:
-  stx stored_position_x
-  sty stored_position_y
+print_char:
+//  jsr KERNAL_CLR_SCR
+  
   clc
-  jsr KERNAL_SET_CURSOR // set cursor
-  lda #CURSOR_CHAR
-  jsr KERNAL_CHR_OUT // print char
-  ldx stored_position_x
-  ldy stored_position_y
+  jsr KERNAL_SET_CURSOR
+  lda cursor_ptr
+  jsr KERNAL_CHR_OUT
+  
+//  jsr wait_1_second
+  
+  clc
+  adc #1
+  sta cursor_ptr
+  cmp #CURSOR_CHAR_END
+  beq reset_cursor 
   rts
 
-// assembler constants for special addresses
+reset_cursor:
+  lda #CURSOR_CHAR_START
+  sta cursor_ptr
+  rts
+
 .label KERNAL_CLR_SCR = $E544  // addr Kernal clear screen
 .label KERNAL_CHR_OUT = $ffd2
 .label KERNAL_SET_CURSOR = $fff0
-.label CURSOR_CHAR = $D1 // circle cursor
+.label CURSOR_CHAR_START = $41 // A
+.label CURSOR_CHAR_END = $5B // Z
+//.label CURSOR_CHAR_CLEAR = $20 // heart cursor

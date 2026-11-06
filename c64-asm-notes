@@ -1,11 +1,51 @@
 c64 asm notes:
 
-use stack to push/pop x/y/a registers
+stack
+  use stack to push/pop x/y/a registers
+	
 	256/ff bytes avail stack
 	
 	// initialize stack
 	ldx #$ff 
 	txs 
+
+indexed-indirect addressing
+  (commonly used)
+  array base address stored in zero page as the vector
+  array index placed in y
+  ldy #$04
+  lda ($02), y
+
+indirect-indexed addressing:
+  (rarely used)
+  only useful to select a vector from an array of (above, index-indirect) zero page vectors
+  ldx #$04
+  lda ($02, x)
+
+zero page $0000 - $00ff
+
+placing/putting characters at direct x,y screen positions, c64 video #21 @ 33:00min, 39:00
+
+  .label ZP_ROW_LO = $0020 // $000x - $00fe
+  .label ZP_ROW_HI = $0021 // $000x+1 - $00ff
+  
+  lda #$00
+  sta ZP_ROW_LO
+  lda #$04
+  sta ZP_ROW_HI
+  
+  ldy #$ff // load an offset to y
+  lda #1 // character "A" into accum
+  sta (ZP_ROW_LO), y // effectively becomes $04ff <------ results zero page $04
+  
+  ldy #$00 // load an offset to y
+  lda #2 // character "B" into accum
+  sta (ZP_ROW_LO), y // effectively becomes $04ff
+  
+  inc ZP_ROW_HI <------ increment zero page
+  lda #3 // character "C" into accum
+  sta (ZP_ROW_LO), y // effectively becomes $05ff <------ results zero page $05
+  
 
 z flag
 	The Z (zero) flag is probably misnamed, and should have been called the E flag (for "equals"). After any comparison (CPX to compare X, CPY to compare Y, or CMP to compare A), the Z flag will be set to "on" if the compared values are equal; otherwise will be reset to "off."

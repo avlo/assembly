@@ -20,7 +20,7 @@ loop:
   inc char_to_print
   lda position
   bne loop
-  lda SCREEN_RAM_START
+//  lda SCREEN_RAM_START
   rts
 
 .label KERNAL_CLR_SCR = $E544  // addr Kernal clear screen
